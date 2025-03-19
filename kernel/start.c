@@ -23,7 +23,7 @@ void kernel_start(void)
    
     
     printf("Paging initialized\n");
-    print_mem();
+    //  print_mem();
     // on ne doit jamais sortir de kernel_start
     while (1) {
         // cette fonction arrete le processeur

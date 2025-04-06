@@ -49,6 +49,8 @@
 #define SEL_PL_U        0x03                        /* user selector */
 
 
+
+
 static void fill_descriptor(unsigned long long *entry, void *addr,
 	unsigned limit, unsigned access, unsigned sizebits)
 {

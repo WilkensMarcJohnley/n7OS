@@ -46,6 +46,17 @@
 #include <string.h>	/* strlen */
 #include <doprnt.h>
 
+// copied/pasted from stackoverflow
+#if defined __has_cpp_attribute
+    #if __has_cpp_attribute(fallthrough)
+        #define MY_FALLTHROUGH  [[fallthrough]]
+    #else
+        #define MY_FALLTHROUGH
+    #endif
+#else
+    #define MY_FALLTHROUGH
+#endif
+
 /*
  *  Common code for printf et al.
  *
@@ -380,7 +391,7 @@ void _doprnt(fmt, args, radix, putc, putc_arg)
 
 		case 'o':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'O':
 		    base = 8;
 		    goto print_unsigned;
@@ -388,7 +399,7 @@ void _doprnt(fmt, args, radix, putc, putc_arg)
 		case 'd':
 	        case 'i':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'D':
 		    base = 10;
 		    goto print_signed;
@@ -469,7 +480,7 @@ void _doprnt(fmt, args, radix, putc, putc_arg)
 
 		case 'u':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'U':
 		    base = 10;
 		    goto print_unsigned;
@@ -484,31 +495,31 @@ void _doprnt(fmt, args, radix, putc, putc_arg)
 		     */
 		    (*putc)(putc_arg, '0');
 		    (*putc)(putc_arg, 'x');
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'x':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'X':
 		    base = 16;
 		    goto print_unsigned;
 
 		case 'z':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'Z':
 		    base = 16;
 		    goto print_signed;
 
 		case 'r':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'R':
 		    base = radix;
 		    goto print_signed;
 
 		case 'n':
  		    truncate = _doprnt_truncates;
-			[[fallthrough]];
+			MY_FALLTHROUGH;
 		case 'N':
 		    base = radix;
 		    goto print_unsigned;

@@ -1,6 +1,7 @@
 #include <n7OS/irq.h>
 #include <n7OS/cpu.h>
 #include <stdio.h>
+#include <n7OS/time.h>
 
 //extern void init_irq();
 extern void (*handlers_IT[])(void);
@@ -22,11 +23,12 @@ void init_irq() {
 
     // Set up the handler for interrupt 50 (IRQ0)
     //Set up the handler for interrupt 50 to 60 (IRQ0)
-    for (int i = 14; i <= 60; i++) {
-        init_irq_entry(i, (uint32_t)handlers_IT[i - 14]);
+    for (int i = 15; i <= 60; i++) {
+        init_irq_entry(i, (uint32_t)handlers_IT[i - 15]);
     }
     
 }
+
 
 
 void handler_en_C(int irq_num) {
@@ -35,11 +37,8 @@ void handler_en_C(int irq_num) {
     // Clear the interrupt flag
     switch (irq_num)
     {
-    case 14 : printf("Handler for segmentation fault\n");
-        while (1)
-        {
-            hlt();
-        }
+    case 32: 
+        timer_handler_C();
         break;
     
     default: printf("Handler for IRQ %d\n", irq_num);
@@ -47,3 +46,4 @@ void handler_en_C(int irq_num) {
     }
 
 }
+

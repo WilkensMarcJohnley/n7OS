@@ -52,11 +52,19 @@ void vider_ecran(){
  * @param colonne: colonne 
 */
 
-void position_cursor(int ligne, int colonne) {
+void position_cursor(int x, int y) {
     
     if(ligne==VGA_HEIGHT) {
         decaler_ligne();
         ligne= VGA_HEIGHT-1;
+        colonne= 0;
+    }
+
+    ligne=x;
+    colonne=y;
+
+    if(ligne==0 && colonne==65) {
+        ligne++;
         colonne= 0;
     }
 

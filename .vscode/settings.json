@@ -3,6 +3,7 @@
         "cpu.h": "c",
         "mem.h": "c",
         "irq.h": "c",
-        "processor_structs.h": "c"
+        "processor_structs.h": "c",
+        "time.h": "c"
     }
 }

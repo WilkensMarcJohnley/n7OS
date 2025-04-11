@@ -5,6 +5,7 @@
 #include <n7OS/mem.h>
 #include <n7OS/paging.h>
 #include <stdio.h>
+#include <n7OS/time.h>
 
 
 
@@ -19,10 +20,11 @@ void kernel_start(void)
 
     // lancement des interruptions
     init_irq();
+    time_init();
     sti();
     
     
-    //init_irq_entry(50, (uint32_t)handler_en_C);
+
 
     /*
        test de la pagination
@@ -45,10 +47,11 @@ void kernel_start(void)
     */
 
     
-    __asm__ ("int $(50)");
-    __asm__("int $(50)");
-    __asm__("int $(14)");
-    __asm__ ("int $(50)");
+    //__asm__ ("int $(32)");
+    //__asm__("int $(50)");
+    //__asm__("int $(14)");
+    //__asm__ ("int $(50)");
+    //__asm__("int $(20)");
     /*
        fin d'un test d'interruption    
     */

@@ -39,6 +39,8 @@
 
 void init_console();
 
+void position_cursor(int ligne, int colonne);
+
 /*
  * This is the function called by printf to send its output to the screen. You
  * have to implement it in the kernel and in the user program.

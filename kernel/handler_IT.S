@@ -15,7 +15,6 @@ handler_IT_\id:
 .endm
 
 # Génération des handlers avec la macro
-HANDLER_INTERRUPT 14
 HANDLER_INTERRUPT 15
 HANDLER_INTERRUPT 16
 HANDLER_INTERRUPT 17
@@ -66,7 +65,6 @@ HANDLER_INTERRUPT 60
 .data
 .globl handlers_IT
 handlers_IT:
-    .long handler_IT_14
     .long handler_IT_15
     .long handler_IT_16
     .long handler_IT_17

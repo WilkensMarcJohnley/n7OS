@@ -51,9 +51,10 @@ uint32_t initialise_paging() {
     uint32_t testcr0, testcr3;
     __asm__ __volatile__("mov %%cr0, %0" : "=r"(testcr0));
     __asm__ __volatile__("mov %%cr3, %0" : "=r"(testcr3));
-    printf("CR3 : %x\n", testcr3);
+    
+    /* printf("CR3 : %x\n", testcr3);
     printf("CR0 : %x\n", testcr0);
-    printf("page_dir : %x\n", page_dir);
+    printf("page_dir : %x\n", page_dir); */
 
     return page_dir;
 }

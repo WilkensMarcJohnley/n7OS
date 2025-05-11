@@ -20,9 +20,8 @@ void time_init() {
     outb(lsb, PIT_CHANNEL0); // Envoi de la partie basse
     outb(msb, PIT_CHANNEL0); // Envoi de la partie haute
 
-    init_irq_entry(32, (uint32_t)handlers_IT[32-15]); // Initialisation de l'entrée d'interruption pour le timer
-
-    //init_irq_entry(32, (uint32_t)timer_handler); // Initialisation de l'entrée d'interruption pour le timer
+    /* init_irq_entry(32, (uint32_t)handlers_IT[32-15]); // Initialisation de l'entrée d'interruption pour le timer
+    deja fait avec init_IRQ dans test_irq.c */
 
  // Initialisation de l'IDT et des entrées d'interruption
 
@@ -72,6 +71,9 @@ void time_get_hms() {
     seconds = (ticks / 1000) % 60;
     minutes = (ticks / (1000 * 60)) % 60;
     hours = (ticks / (1000 * 3600)) % 24;
+    int ligne = get_ligne();
+    int colonne = get_colonne();
     position_cursor(0,72);
     printf("%02u:%02u:%02u\n", hours, minutes, seconds);
+    position_cursor(ligne, colonne);
 }

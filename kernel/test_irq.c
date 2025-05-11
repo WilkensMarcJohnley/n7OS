@@ -2,11 +2,12 @@
 #include <n7OS/cpu.h>
 #include <stdio.h>
 #include <n7OS/time.h>
+#include <n7OS/clavier.h>
 
 //extern void init_irq();
 extern void (*handlers_IT[])(void);
 
-void init_irq_entry(int irq_num, uint32_t handler);
+//void init_irq_entry(int irq_num, uint32_t handler);
 
 
 
@@ -39,6 +40,10 @@ void handler_en_C(int irq_num) {
     {
     case 32: 
         timer_handler_C();
+        break;
+    
+    case 33:
+        keyboard_handler_C();
         break;
     
     default: printf("Handler for IRQ %d\n", irq_num);

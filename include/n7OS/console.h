@@ -46,5 +46,9 @@ void position_cursor(int ligne, int colonne);
  * have to implement it in the kernel and in the user program.
  */
 void console_putbytes(const char *s, int len);
+void console_putchar(const char c);
+int get_ligne();
+int get_colonne();
+void vider_ecran();
 
 #endif

@@ -4,6 +4,10 @@
         "mem.h": "c",
         "irq.h": "c",
         "processor_structs.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "sys.h": "c",
+        "unistd.h": "c",
+        "clavier.h": "c",
+        "console.h": "c"
     }
 }

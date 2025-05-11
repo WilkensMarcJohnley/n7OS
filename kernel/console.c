@@ -10,6 +10,7 @@ void console_putchar(const char c);
 void console_putbytes(const char *s, int len);
 void effacer();
 void test();
+void vider_ecran();
 
 uint16_t *scr_tab;
 int ligne= 0; // Ligne courante
@@ -23,7 +24,7 @@ int cursor_pos; // Position du curseur
 void init_console() {
     
     scr_tab= (uint16_t *) SCREEN_ADDR;
-    printf("\f");
+    vider_ecran();
     position_cursor(ligne, colonne);   
 }
 
@@ -37,9 +38,7 @@ void effacer_ligne(int ligne){
     memset_16(scr_tab+VGA_WIDTH*ligne, CHAR_COLOR<<8|' ', VGA_WIDTH*sizeof(uint16_t));
 }
 void vider_ecran(){
-    for(int i= 0; i<VGA_HEIGHT; i++) {
-        effacer_ligne(i);
-    }
+    memset_16(scr_tab, CHAR_COLOR<<8|' ', VGA_WIDTH*VGA_HEIGHT*sizeof(uint16_t));
     ligne= 0;
     colonne= 0;
     position_cursor(ligne, colonne);
@@ -102,12 +101,24 @@ void console_putchar(const char c) {
     } else if(c=='\r'){
         colonne= 0;
     }else if(c=='\b') {
-        if(ligne>0 && colonne==0) {
-            ligne--;
-            colonne= 79;
-        }else if(colonne>0) {
-            colonne--;
+        if(ligne==0 && colonne==0) {
+            return;
         }
+
+        if(ligne==1 && colonne==0) {
+            ligne= 0;
+            colonne= 64;
+        }else{
+            if(ligne>0 && colonne==0) {
+                ligne--;
+                colonne= 79;
+            }else if(colonne>0) {
+                colonne--;
+            }
+        }
+        
+        cursor_pos= VGA_WIDTH*ligne+colonne;
+        scr_tab[cursor_pos]= CHAR_COLOR<<8|' ';
     }else if(c=='\f') {
         vider_ecran();
         ligne= 0;
@@ -152,5 +163,13 @@ void decaler_ligne(){
     ligne= VGA_HEIGHT-1;
     colonne= 0;
     position_cursor(ligne, colonne);
+}
+
+int get_ligne(){
+    return ligne;
+}   
+
+int get_colonne(){
+    return colonne;
 }
 

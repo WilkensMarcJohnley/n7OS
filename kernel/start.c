@@ -9,7 +9,12 @@
 #include <unistd.h>
 #include <n7OS/sys.h>
 #include <n7OS/clavier.h>
+#include <n7OS/irq.h>
+#include <n7OS/processus.h>
 
+extern void processus1();
+extern void idle();
+extern void processus2();
 
 void kernel_start(void)
 {
@@ -24,40 +29,23 @@ void kernel_start(void)
     init_irq();
     init_syscall();
 
-    /*
-        test de l'interruption timer 
-     */
-
     time_init();
 
-    /*
-        fin test interruprion timer 
-     */
-
-    /*
-        test de l'interruption clavier
-    */
     init_keyboard();
+
 
 
     sti();
     
-    
+    // tout les tests dans le mini shell
 
 
     /*
        test de la pagination
     */
 
-    
 
-    alloc_page_entry(0xA0000000, 0, 0);
-    uint32_t *ptr= (uint32_t *)0xA0000000;
-    uint32_t do_page_fault= *ptr;
-    printf("test de la pagination : %x\n", do_page_fault);
-    do_page_fault++;
-
-    printf("test de la pagination reussi : %x\n", do_page_fault);
+   
 
     /*
      ---------------------------------------------------------------------------
@@ -65,7 +53,7 @@ void kernel_start(void)
      ---------------------------------------------------------------------------
     */
 
-    test_clavier();
+
     
 
     /*
@@ -90,12 +78,27 @@ void kernel_start(void)
         test de l'appel systeme
     */ 
     
-    if(example() == 1)
-        printf("Appel systeme reussi\n");
+   /*  if(example() == 1)
+        printf("Appel systeme reussi\n"); */
 
-     printf("appel systeme shutdown : %d\n",shutdown(4));
+    init_processus();
+    
+    //creer_processus("processus_idle", idle);
+    //creer_processus("processus1", processus1);
+    //creer_processus("processus_idle", idle);
+    //idle();
+    
+    //scheduler();
 
-     //shutdown(1);
+    //myfork("processus1", processus1);
+    //myfork("processus2", processus2);
+    
+    idle();
+
+
+    
+
+    //shutdown(1);
 
     /* 
         fin test de l'appel systeme
@@ -105,6 +108,10 @@ void kernel_start(void)
     // on ne doit jamais sortir de kernel_start
     while (1) {
         // cette fonction arrete le processeur
+
+        //recuperation et ecriture d'un caractere recu au clavier
+        char c = kgetch();        // Attendre une touche
+        console_putchar(c); 
         hlt();
     }
 }

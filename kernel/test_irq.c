@@ -7,7 +7,6 @@
 //extern void init_irq();
 extern void (*handlers_IT[])(void);
 
-//void init_irq_entry(int irq_num, uint32_t handler);
 
 
 
@@ -20,10 +19,10 @@ extern void (*handlers_IT[])(void);
 
 
 void init_irq() {
-    
-
     // Set up the handler for interrupt 50 (IRQ0)
     //Set up the handler for interrupt 50 to 60 (IRQ0)
+    // utilisation d'un tableau de handlers
+    // initialise tous les gestionnaires d'interruption de 15 à 60
     for (int i = 15; i <= 60; i++) {
         init_irq_entry(i, (uint32_t)handlers_IT[i - 15]);
     }

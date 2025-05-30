@@ -1,0 +1,45 @@
+Ce qui marche :
+La console
+La pagination et la memoire
+Les interruptions
+Le timer 
+Les appels systemes
+Le clavier 
+Les processus (à l'exception de bloquer_processus qui n'est pas testé)
+Le scheduler
+Un minishell 
+
+
+choix techniques : utilisation de variables globales pour la gestion de la table des processus,
+les indices du curseur dans la console, la table de gestion des interruptions.
+Cette gestion des variables globales facilitent l'exportation des variables nécessaires et 
+elle est bien faite car elles ne sont pas implementées sur des accès concurrents.
+
+La table des processus est une table statique (facilité d'implémentation, évite de nombreux bugs).
+
+utilisation d'une file d'attente FIFO pour gerer les processus actifs. (facilité de gestion) 
+
+Pour le Scheduler : J'ai implanté un roud robind qui se base sur le timer, avec le processus 
+idle kernel qui n'est pas prioritaire, il reprend la main quand tous les autres processus ont 
+fini leur traitement. 
+
+Et s'il n y a qu'un seul processus dans la file, on ne change pas de contexte.
+
+Le processus 0 est réservé uniquement à idle kernel, son contexte est donné dans init_processus.
+
+
+pour le minishell 
+Fonctionnement : à chaque commande passée, un processus est crée pour éxécuter la commande, et une fois 
+que le processus exécutant la commande se termine il redonne la main à idle_kernel. Ce mécanisme
+nous permet de vérifier par ailleurs que notre implémentation du processus fonctionne.
+
+help : pour avoir l'aide sur l'utilisation 
+clear : pour vider l'écran
+test : pour tester la pagination et les appels systèmes. 
+ps : qui affiche les processus actifs. (process teste aussi la commande ps).
+process : qui teste les processus en créant un processus qui crée deux processus et affiche les 
+          processus actifs avant que chaque processus se termine et redonne la main a idle_kernel.
+mem : qui affiche la mémoire. 
+
+Comme le sleep n'est pas implémenté, une petite attente est ajouté avant l'exit de la commande ps 
+pour attendre la fin des processus créés à l'aide d'une boucle while. 

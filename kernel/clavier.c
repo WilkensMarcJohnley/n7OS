@@ -30,6 +30,12 @@ char scancode_to_ascii[128] = {
     // le reste (touches F1-F12, etc.) est laissé à 0
 };
 
+/*
+    * @brief Initialise le clavier
+    * 
+    * Cette fonction configure le clavier pour recevoir les entrées et initialise le tampon de clavier.
+    * Elle est appelée au démarrage du système pour préparer l'environnement d'entrée du clavier.
+*/
 void init_keyboard() {
 
     //init_irq_entry(33, (uint32_t)handlers_IT[33-15]);
@@ -40,6 +46,14 @@ void init_keyboard() {
     outb(mask, 0x21); 
 } 
 
+/*
+    * @brief Ajoute un caractère au tampon de clavier
+    * 
+    * Cette fonction ajoute un caractère au tampon de clavier si celui-ci n'est pas plein.
+    * Elle gère le cas où le tampon est plein en ne faisant rien.
+    * 
+    * @param c Le caractère à ajouter au tampon
+*/
 void buffer_put(char c) {
     // Ajouter un caractère au tampon
     int next = (buffer_tail + 1) % BUFFER_SIZE;
@@ -52,6 +66,15 @@ void buffer_put(char c) {
 }
 
 // Fonction pour lire un caractère du tampon clavier
+/*
+    * @brief Lit un caractère du tampon de clavier
+    * 
+    * Cette fonction lit un caractère du tampon de clavier. Si le tampon est vide, elle attend
+    * qu'un caractère soit disponible. Elle utilise une attente active (busy-wait) pour simplifier
+    * la gestion des entrées.
+    * 
+    * @return Le caractère lu du tampon
+*/
 char kgetch() {
     // Attendre qu'un caractère soit disponible
     while (buffer_head == buffer_tail) {
@@ -67,6 +90,14 @@ char kgetch() {
     return c;
 }
 
+/*
+    * @brief Gestionnaire d'interruption pour le clavier
+    * 
+    * Cette fonction est appelée lorsqu'une interruption du clavier se produit.
+    * Elle lit le code de touche, le convertit en caractère ASCII, gère les touches Shift,
+    * et ajoute le caractère au tampon de clavier. Elle envoie également un signal d'acknowledge
+    * à l'IRQ1 pour indiquer que l'interruption a été traitée.
+*/
 void keyboard_handler_C() {
     // Gestionnaire d'interruption pour le clavier
     uint8_t scancode = inb(KEYBOARD_PORT); // Lire le code de touche
@@ -118,6 +149,12 @@ void keyboard_handler_C() {
     outb(0x20, 0x20); // Envoyer un signal d'acknowledge à l'IRQ1
 }
 
+/*
+    * @brief Teste le clavier en affichant les caractères tapés
+    * 
+    * Cette fonction entre dans une boucle infinie, lisant les caractères du clavier et les affichant à l'écran.
+    * Elle est utilisée pour tester le fonctionnement du clavier dans le système.
+*/
 void test_clavier() {
     while (1) {
         char c = kgetch();        // Attendre une touche

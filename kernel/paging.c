@@ -7,8 +7,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern kmalloc_a(uint32_t size);
+
 PageDirectory page_dir;
-//PageTable *page_table;
+
 
 void setPageEntry(PTE *page_table_entry, uint32_t new_page, int is_writeable, int is_kernel) {
     page_table_entry->page_entry.p= 1;
@@ -19,7 +21,10 @@ void setPageEntry(PTE *page_table_entry, uint32_t new_page, int is_writeable, in
     page_table_entry->page_entry.page= new_page>>12;
 }
 
-
+/*
+    initialise et active la pagination
+    * @return PageDirectory Le répertoire de page initialisé
+*/
 uint32_t initialise_paging() {
     uint32_t index =0;
     init_mem();
@@ -59,7 +64,17 @@ uint32_t initialise_paging() {
     return page_dir;
 }
 
-
+/*
+    * @brief Alloue une entrée de page dans la table de page
+    * 
+    * @param address Adresse virtuelle à allouer
+    * @param is_writeable Indique si la page est écrivable
+    * @param is_kernel Indique si la page est destinée au noyau
+    * @return PageTable La table de page mise à jour
+    * 
+    * Cette fonction alloue une entrée de page dans la table de page pour l'adresse virtuelle spécifiée.
+    * Elle met à jour l'entrée avec l'adresse physique trouvée et les bits de contrôle appropriés.
+*/
 PageTable alloc_page_entry(uint32_t address, int is_writeable, int is_kernel) {
     // address = adresse virtuelle à allouer 
     // address = idx_PDE | idx_PTE | offset

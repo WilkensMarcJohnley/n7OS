@@ -8,6 +8,11 @@
         "sys.h": "c",
         "unistd.h": "c",
         "clavier.h": "c",
-        "console.h": "c"
+        "console.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "processus.h": "c",
+        "inttypes.h": "c"
     }
 }

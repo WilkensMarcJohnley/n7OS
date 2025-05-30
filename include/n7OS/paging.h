@@ -17,7 +17,6 @@
  * 
  */
 typedef struct {
-    // a completer
     uint32_t p:1;
     uint32_t w:1;   
     uint32_t u:1;
@@ -37,6 +36,7 @@ typedef struct{
     uint32_t rsvd:9;
     uint32_t page:20;
 }page_directory_entry_t;
+
 
 /**
  * @brief Une entrée dans la table de page peut être manipulée en utilisant

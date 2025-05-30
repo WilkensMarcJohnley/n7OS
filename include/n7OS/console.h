@@ -39,7 +39,7 @@
 
 void init_console();
 
-void position_cursor(int ligne, int colonne);
+void position_cursor(int ligne, int colonne,int timer);
 
 /*
  * This is the function called by printf to send its output to the screen. You
@@ -50,5 +50,6 @@ void console_putchar(const char c);
 int get_ligne();
 int get_colonne();
 void vider_ecran();
+void effacer();
 
 #endif

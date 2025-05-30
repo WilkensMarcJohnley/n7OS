@@ -18,7 +18,7 @@
 #define TIMER_IRQ 0x20 // IRQ pour le timer
 
 
-void timer_handler();
+void timer_handler_C();
 void time_get_hms();
 void time_init();
 

@@ -68,21 +68,10 @@ void init_mem() {
  * 
  */
 void print_mem() {
-    /*for(uint32_t i=0; i<size; i++) {
-        printf("%d ", free_page_bitmap_table[i/NBOCTETPAGES]);
-        if(free_page_bitmap_table[i/NBOCTETPAGES] & (1 << (i%NBOCTETPAGES))) {
-            printf("%d ", free_page_bitmap_table[i/NBOCTETPAGES]);
-        } else {
-            printf("0 ");
-        }
-
-        if(i%32==31) {
-            printf("\n");
-        }
-    }*/
-
+    
     for (int i = 0; i < size; i++) {
         uint32_t value = free_page_bitmap_table[i];
         printf("T %d: 0x%X ; ", i, value);
     }
+    printf("\n");
 }

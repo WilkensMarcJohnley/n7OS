@@ -1,11 +1,18 @@
+
 #ifndef __UNISTD_H__
 #define __UNISTD_H__
+
+#include "n7OS/processus.h"
 
 #define NR_example 0
 
 #define NR_shutdown 1
 
 #define NR_write 2
+
+#define NR_myfork 3
+
+#define NR_myexit 4
 
 // Fonction d'enveloppe sans argument
 #define syscall0(type,name) \
@@ -56,5 +63,9 @@ int example();
 int shutdown(int n);
 
 int write(const char *s, int len);
+
+pid_t myfork(const char *name, fnptr f);
+
+int myexit();
 
 #endif
